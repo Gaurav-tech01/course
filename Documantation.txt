@@ -1,6 +1,8 @@
 Backend In NodeJS
 Database: MongoDB
 
+In the documantaion and the code I have used express validator to ensure data integrity and to check is email is valid or not and give a response as well.
+There test cases also for every API endpoints.
 
 //API to register user
 //URL: localhost:3001/auth/createuser
