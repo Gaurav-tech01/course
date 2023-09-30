@@ -1,0 +1,92 @@
+Backend In NodeJS
+Database: MongoDB
+
+
+//API to register user
+//URL: localhost:3001/auth/createuser
+
+Sample Request :
+{
+    "username":"gaurav",
+    "email":"aravsaraiwala20@gmail.com",
+    "password":"123654789"
+}
+
+Sample Response :
+{
+    "success": true,
+    "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUxODgwMzAzZDhlYjM2MTBhODhiMGY0In0sImlhdCI6MTY5NjEwNDQ5Nn0.q325npLTxSWrofX-UVIlwuh1El7DGr5rI7kR7GrFRtE"
+}
+
+In this request the api will return auth-token which is unique for every user.
+It will be used to validate if person enrolling in course or listing course is valid person or not.
+This token will be send as header in rest of the API's.
+
+//API to create Course
+// URL : localhost:3001/course/createCourse
+Sample Request:{
+    header:
+    auth-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUxODgwMzAzZDhlYjM2MTBhODhiMGY0In0sImlhdCI6MTY5NjEwNDQ5Nn0.q325npLTxSWrofX-UVIlwuh1El7DGr5rI7kR7GrFRtE
+    body:{
+        "title":"Os Course",
+    "description":"The best os course",
+    "instructor":"Gaurav"
+    }
+}
+
+Sample Response:{
+    "success": true,
+    "course": {
+        "userId": "651880303d8eb3610a88b0f4",
+        "title": "Os Course",
+        "description": "The best os course",
+        "instructor": "Gaurav",
+        "_id": "6518803e3d8eb3610a88b0f7",
+        "__v": 0
+    }
+}
+
+in the course model there is userId which is taken as automatically generated and stored in database or authentication of valid user.
+
+//Course listing
+//Url:localhost:3001/course/getCourse
+
+it only takes header as the request 
+and give response of all the courses
+Sample Response:
+[
+    {
+        "_id": "651880073d8eb3610a88b0f1",
+        "userId": "65187e908b1499caaab06fcf",
+        "title": "DSA Course",
+        "description": "The best dsa course",
+        "instructor": "Gaurav",
+        "__v": 0
+    },
+    {
+        "_id": "6518803e3d8eb3610a88b0f7",
+        "userId": "651880303d8eb3610a88b0f4",
+        "title": "Os Course",
+        "description": "The best os course",
+        "instructor": "Gaurav",
+        "__v": 0
+    }
+]
+
+//API to enroll
+//Url: localhost:3001/enroll/CourseEnroll/651880073d8eb3610a88b0f1
+
+In enrollment also no body should be given only header for authentication
+and courseId in the Url as params.
+
+It will generate a sample response containing user id of the user who enrolled the course and the courseId in which the user has enrolled
+Sample Response:
+{
+    "success": true,
+    "enrolledCouse": {
+        "userId": "651880303d8eb3610a88b0f4",
+        "courseId": "651880073d8eb3610a88b0f1",
+        "_id": "65188183110b2d5ae16ac6cf",
+        "__v": 0
+    }
+}
